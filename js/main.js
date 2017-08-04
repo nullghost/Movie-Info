@@ -91,12 +91,30 @@ $(document).ready(() => {
 
   $('#searchForm').on('submit', (e) => {
     let searchText = $('#searchText').val();
-    getMovies(searchText);
+    $('#movies').html(`<div class="col-md-8 col-md-offset-2 text-center">
+                              <div class="well" style="background-color:#1b809e;color:#fff;">
+                                  <h4>Searching....</h4>
+                              </div>
+                            </div>`
+                            );
+    if (searchText != '') {
+      getMovies(searchText);
+    }else{
+      $('#movies').html(`<div class="col-md-8 col-md-offset-2 text-center">
+                              <div class="well" style="background-color:#1b809e;color:#fff;">
+                                  <h4 style="color:red">Please enter some data !!!</h4>
+                              </div>
+                            </div>`
+                            );
+    }
+    
     e.preventDefault();
   });
 });
 
 function getMovies(searchText){
+
+
   axios.get('https://api.themoviedb.org/3/search/movie?api_key=fa155f635119344d33fcb84fb807649b&query='+searchText)
     .then((response) => {
       console.log(response);
